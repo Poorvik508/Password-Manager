@@ -1,2 +1,2 @@
 # Password-Manager
-Password manager using React, Express, MongoDB, Tailwind CSS, and Next.js.
+Password manager using React, Express, MongoDB and TailwindCSS.
