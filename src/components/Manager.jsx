@@ -13,6 +13,7 @@ const Manager = () => {
                 <div className="flex">
                     <input type="text" />
                     <input type="text" />
+                    <input type="text" />
                 </div>
             </div>
             </div>
