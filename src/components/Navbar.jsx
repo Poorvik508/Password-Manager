@@ -2,8 +2,16 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-      <nav className="flex items-center justify-between px-4 bg-purple-200 h-14">
-          <div className="font-bold ">Passop</div>
+      <nav className="text-white bg-slate-800">
+          <div className="flex items-center justify-between px-4 py-5 mycontainer h-14">
+              
+              <div className="text-2xl font-bold text-white">
+                  <span className="text-green-700"> &lt;</span>
+                 
+                 <span> Pass</span>
+                  <span className="text-green-700">OP/&gt;</span>
+                 
+              </div>
           <ul >
               <li className="flex gap-4 ">
                   <a className="hover:font-bold" href="/">Home</a>
@@ -12,6 +20,7 @@ const Navbar = () => {
               
               </li>
           </ul>
+        </div>
    </nav>
   )
 }
