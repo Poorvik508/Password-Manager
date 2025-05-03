@@ -1,6 +1,11 @@
 import React, { use, useEffect } from 'react'
 import { useRef, useState } from "react"
-import { ToastContainer,toast } from "react-toastify"
+import { ToastContainer, toast } from "react-toastify"
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
+import { v4 as uuidv4}  from 'uuid'
+
+
 
 const Manager = () => {
   const ref = useRef()
@@ -26,10 +31,46 @@ const Manager = () => {
     //     }
     // }
     const savepassword = () => {
-      setpasswordarray([...passwordarray, form])
-      localStorage.setItem("password",JSON.stringify([...passwordarray,form]))
+      setpasswordarray([...passwordarray, { ...form,id:uuidv4() }])
+      localStorage.setItem(
+        "password",
+        JSON.stringify([...passwordarray, { ...form, id: uuidv4() }])
+      );
+      setform({ site: "", username: "", password: "" })
+       toast("Password Saved Successfully", {
+         position: "top-right",
+         autoClose: 1000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "light",
+       });
       
     }
+    const deletepassword = (id) => {
+      setpasswordarray(passwordarray.filter(item=>item.id!=id))
+      localStorage.setItem(
+        "password", JSON.stringify(passwordarray.filter(item=>item.id!=id) )
+      );
+       toast("Password Deleted Successfully", {
+         position: "top-right",
+         autoClose: 1000,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "light",
+       });
+      
+  }
+  const editpassword = (id) => {
+    setform(passwordarray.filter(item => item.id === id)[0])
+    setpasswordarray(passwordarray.filter(item=>item.id!=id))
+    
+  }
     const handlechange=(e) => {
       setform({...form,[e.target.name]:e.target.value})
   }
@@ -65,7 +106,7 @@ const Manager = () => {
         
         />
         <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-        <div className=" mycontainer">
+        <div className="p-2 md:p-0 md:mycontainer">
           <h1 className="text-4xl font-bold text-center">
             {" "}
             <span className="text-green-700"> &lt;</span>
@@ -85,7 +126,7 @@ const Manager = () => {
               placeholder="Enter Website URL"
               name="site"
             />
-            <div className="flex justify-between w-full gap-8">
+            <div className="flex md:flex-row flex-col justify-between w-full gap-8">
               <input
                 value={form.username}
                 onChange={handlechange}
@@ -139,6 +180,7 @@ const Manager = () => {
                     <th className="py-2">Site</th>
                     <th className="py-2">User Name</th>
                     <th className="py-2">Password</th>
+                    <th className="py-2">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-green-100">
@@ -159,7 +201,7 @@ const Manager = () => {
                           </div>
                         </td>
                         <td className=" w-32 px-2">
-                          <div className="flex items-center justify-center">
+                          <div className="flex w-32 items-center justify-center">
                             {item.username}
                             <div
                               className="  cursor-pointer mx-2"
@@ -178,6 +220,13 @@ const Manager = () => {
                             >
                               <img width={20} src="icons/copy.svg" alt="" />
                             </div>
+                          </div>
+                        </td>
+                        <td className=" px-2 w-32">
+                          <div className="flex justify-center items-center gap-10">
+
+                          <span onClick={()=>editpassword(item.id)} className="cursor-pointer">  < FaEdit/> </span>
+                          <span onClick={()=>deletepassword(item.id)} className="cursor-pointer ">  <MdDeleteForever /> </span>
                           </div>
                         </td>
                       </tr>
